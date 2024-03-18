@@ -1,9 +1,24 @@
 version: '3.1'
 
 services:
+  app:
+    container_name: quarkus
+    image: app
+    restart: always
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.native
+    ports:
+      - "8080:8080"
+    networks:
+      - test
+
   db:
     image: postgres
     restart: always
+    container_name: db
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
@@ -12,3 +27,9 @@ services:
       - "5432:5432"
     volumes:
         - ./db:/var/lib/postgresql/data
+    networks:
+      - test
+
+networks:
+    test:
+        driver: bridge

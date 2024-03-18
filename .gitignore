@@ -1,3 +1,6 @@
+#Locust
+__pycache__
+
 # Gradle
 .gradle/
 build/
